@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:supabase_studying/app.dart';
 
 Future<void> main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
     url: 'https://zdeimpmekezpkypnpssb.supabase.co',
     anonKey:
