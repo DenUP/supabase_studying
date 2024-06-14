@@ -10,6 +10,7 @@ class NotesMain extends StatefulWidget {
 }
 
 class _NotesMainState extends State<NotesMain> {
+  final _streamNotes = supabase.from('notes').stream(primaryKey: ['id']);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,14 +48,22 @@ class _NotesMainState extends State<NotesMain> {
           color: Colors.white,
         ),
       ),
-      body: Center(
-        child: ListView.builder(
-          // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return Text('dsa');
-          },
-        ),
+      body: StreamBuilder<List<Map<String, dynamic>>>(
+        stream: _streamNotes,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final notes = snapshot.data!;
+          return ListView.builder(
+            itemCount: notes.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(notes[index]['body']),
+              );
+            },
+          );
+        },
       ),
     );
   }
