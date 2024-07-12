@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_studying/UI/widgets/notes_main.dart';
+import 'package:provider/provider.dart';
+import 'package:supabase_studying/Auth/auth_model.dart';
+import 'package:supabase_studying/Auth/auth_page.dart';
+import 'package:supabase_studying/registr/regist_model.dart';
+import 'package:supabase_studying/registr/regist_widget.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -10,7 +14,8 @@ class App extends StatelessWidget {
       initialRoute: '/',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const NotesMain(),
+        '/': (context) => const AuthPage(),
+        '/regist': (context) => const RegistWidget(),
       },
     );
   }
