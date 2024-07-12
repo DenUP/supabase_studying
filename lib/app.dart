@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:supabase_studying/Auth/auth_model.dart';
-import 'package:supabase_studying/Auth/auth_page.dart';
-import 'package:supabase_studying/registr/regist_model.dart';
-import 'package:supabase_studying/registr/regist_widget.dart';
+import 'package:supabase_studying/auth_page.dart';
+import 'package:supabase_studying/reg_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -15,7 +12,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => const AuthPage(),
-        '/regist': (context) => const RegistWidget(),
+        '/regist': (context) => const RegPage(),
       },
     );
   }
