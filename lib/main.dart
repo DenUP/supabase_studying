@@ -14,3 +14,4 @@ Future<void> main() async {
 
 // Get a reference your Supabase client
 final supabase = Supabase.instance.client;
+
