@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_studying/core/theme/app_color.dart';
+import 'package:supabase_studying/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:supabase_studying/features/auth/presentation/pages/login_page.dart';
 import 'package:supabase_studying/features/auth/presentation/widgets/auth_field.dart';
 import 'package:supabase_studying/features/auth/presentation/widgets/auth_gradient_button.dart';
@@ -64,7 +66,15 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(
                 height: 25,
               ),
-              const AuthGradientButton(title: 'Зарегистрироваться'),
+              AuthGradientButton(
+                title: 'Зарегистрироваться',
+                voidCallback: () {
+                  context.read<AuthBloc>().add(SignUpEvent(
+                      name: _nameController.text.trim(),
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text.trim()));
+                },
+              ),
               const SizedBox(
                 height: 15,
               ),

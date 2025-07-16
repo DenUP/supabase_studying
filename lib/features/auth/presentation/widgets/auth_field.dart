@@ -20,6 +20,7 @@ class AuthField extends StatelessWidget {
         if (value!.isEmpty) {
           return 'Введите $value';
         }
+        return null;
       },
     );
   }
