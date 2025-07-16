@@ -3,7 +3,9 @@ import 'package:supabase_studying/core/theme/app_color.dart';
 
 class AuthGradientButton extends StatelessWidget {
   final String title;
-  const AuthGradientButton({super.key, required this.title});
+  final VoidCallback voidCallback;
+  const AuthGradientButton(
+      {super.key, required this.title, required this.voidCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class AuthGradientButton extends StatelessWidget {
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
               fixedSize: Size(MediaQuery.of(context).size.width, 55)),
-          onPressed: () {},
+          onPressed: voidCallback,
           child: Text(
             title,
             style: TextStyle(fontSize: 17, color: AppColor.whiteColor),
