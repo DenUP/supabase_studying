@@ -55,7 +55,10 @@ class _SignupPageState extends State<LoginPage> {
               const SizedBox(
                 height: 25,
               ),
-              const AuthGradientButton(title: 'Войти'),
+              AuthGradientButton(
+                title: 'Войти',
+                voidCallback: () => null,
+              ),
               const SizedBox(
                 height: 15,
               ),
