@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_studying/core/secret/app_key.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_studying/core/theme/app_theme.dart';
+import 'package:supabase_studying/dependecy_injection.dart';
+import 'package:supabase_studying/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:supabase_studying/features/auth/presentation/pages/login_page.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final supabase =
-      await Supabase.initialize(url: AppKey.url, anonKey: AppKey.anonkey);
-  runApp(const App());
+  await init();
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(
+      create: (_) => getIt.get<AuthBloc>(),
+    ),
+  ], child: const App()));
 }
 
 class App extends StatelessWidget {
@@ -19,7 +23,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Auth Supabase',
       theme: AppTheme.themeDark,
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }
