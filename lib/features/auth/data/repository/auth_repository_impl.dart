@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:supabase_studying/core/error/exeption.dart';
 import 'package:supabase_studying/core/error/failure.dart';
 import 'package:supabase_studying/features/auth/data/dataSources/auth_remote_data_source.dart';
+import 'package:supabase_studying/features/auth/domain/entities/user.dart';
 import 'package:supabase_studying/features/auth/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -10,14 +11,14 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({required AuthRemoteDataSource authRemoteDataSource})
       : _authRemoteDataSource = authRemoteDataSource;
   @override
-  Future<Either<Failure, String>> loginWithEmailPassword(
+  Future<Either<Failure, User>> loginWithEmailPassword(
       {required String name, required String email, required String password}) {
     // TODO: implement loginWithEmailPassword
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, String>> signUpWithEmailPassword(
+  Future<Either<Failure, User>> signUpWithEmailPassword(
       {required String name,
       required String email,
       required String password}) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_studying/features/auth/domain/entities/user.dart';
 import 'package:supabase_studying/features/auth/domain/useCases/user_sign_up.dart';
 
 part 'auth_event.dart';
@@ -14,8 +15,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           name: event.name, email: event.email, password: event.password));
       userId.fold((failure) {
         emit(AuthFailure(textError: failure.text));
-      }, (userId) {
-        emit(AuthLoaded(userId: userId));
+      }, (user) {
+        emit(AuthLoaded(user: user));
       });
     });
   }
