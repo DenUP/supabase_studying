@@ -81,10 +81,12 @@ class _SignupPageState extends State<SignupPage> {
                   AuthGradientButton(
                     title: 'Зарегистрироваться',
                     voidCallback: () {
-                      context.read<AuthBloc>().add(SignUpEvent(
-                          name: _nameController.text.trim(),
-                          email: _emailController.text.trim(),
-                          password: _passwordController.text.trim()));
+                      if (keyForm.currentState!.validate()) {
+                        context.read<AuthBloc>().add(SignUpEvent(
+                            name: _nameController.text.trim(),
+                            email: _emailController.text.trim(),
+                            password: _passwordController.text.trim()));
+                      }
                     },
                   ),
                   const SizedBox(

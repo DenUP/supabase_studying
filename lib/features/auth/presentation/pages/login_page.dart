@@ -75,9 +75,11 @@ class _SignupPageState extends State<LoginPage> {
                   AuthGradientButton(
                     title: 'Войти',
                     voidCallback: () {
-                      context.read<AuthBloc>().add(LoginEvent(
-                          email: _emailController.text.trim(),
-                          password: _passwordController.text.trim()));
+                      if (keyForm.currentState!.validate()) {
+                        context.read<AuthBloc>().add(LoginEvent(
+                            email: _emailController.text.trim(),
+                            password: _passwordController.text.trim()));
+                      }
                     },
                   ),
                   const SizedBox(
