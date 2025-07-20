@@ -4,23 +4,21 @@ import 'package:supabase_studying/core/useCases/usecase.dart';
 import 'package:supabase_studying/features/auth/domain/entities/user.dart';
 import 'package:supabase_studying/features/auth/domain/repository/auth_repository.dart';
 
-class UserSignUp implements Usecase<User, UserSignUpParam> {
+class UserLogin implements Usecase<User, UserLoginParam> {
   final AuthRepository _authRepository;
 
-  UserSignUp({required AuthRepository authRepository})
+  UserLogin({required AuthRepository authRepository})
       : _authRepository = authRepository;
   @override
-  Future<Either<Failure, User>> call(UserSignUpParam param) async {
-    return await _authRepository.signUpWithEmailPassword(
-        name: param.name, email: param.email, password: param.password);
+  Future<Either<Failure, User>> call(UserLoginParam param) {
+    return _authRepository.loginWithEmailPassword(
+        email: param.email, password: param.password);
   }
 }
 
-class UserSignUpParam {
-  final String name;
+class UserLoginParam {
   final String email;
   final String password;
 
-  UserSignUpParam(
-      {required this.name, required this.email, required this.password});
+  UserLoginParam({required this.email, required this.password});
 }

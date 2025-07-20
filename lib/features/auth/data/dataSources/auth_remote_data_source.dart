@@ -1,14 +1,14 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:supabase_studying/core/error/exeption.dart';
+import 'package:supabase_studying/features/auth/data/model/user_model.dart';
 
 abstract interface class AuthRemoteDataSource {
-  Future<String> signUpWithEmailPassword({
+  Future<UserModel> signUpWithEmailPassword({
     required String name,
     required String email,
     required String password,
   });
-  Future<String> loginWithEmailPassword({
-    required String name,
+  Future<UserModel> loginWithEmailPassword({
     required String email,
     required String password,
   });
@@ -20,7 +20,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl({required SupabaseClient supabaseClient})
       : _supabaseClient = supabaseClient;
   @override
-  Future<String> signUpWithEmailPassword(
+  Future<UserModel> signUpWithEmailPassword(
       {required String name,
       required String email,
       required String password}) async {
@@ -30,18 +30,26 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (response.user == null) {
         throw ServerException('Ошибка с User == null ');
       }
-      return response.user!.id;
+      return UserModel.fromJson(response.user!.toJson());
     } catch (e) {
       throw ServerException('Ошибка ${e.toString()}');
     }
   }
 
   @override
-  Future<String> loginWithEmailPassword(
-      {required String name,
-      required String email,
-      required String password}) async {
-    // TODO: implement loginWithEmailPassword
-    throw UnimplementedError();
+  Future<UserModel> loginWithEmailPassword(
+      {required String email, required String password}) async {
+    try {
+      final response = await _supabaseClient.auth.signInWithPassword(
+        password: password,
+        email: email,
+      );
+      if (response.user == null) {
+        throw ServerException('Ошибка с User == null ');
+      }
+      return UserModel.fromJson(response.user!.toJson());
+    } catch (e) {
+      throw ServerException('Ошибка ${e.toString()}');
+    }
   }
 }
