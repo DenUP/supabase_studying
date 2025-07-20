@@ -18,14 +18,14 @@ Future<void> init() async {
 }
 
 void _authInit() {
-  getIt.registerFactory<AuthRemoteDataSource>(
-      () => AuthRemoteDataSourceImpl(supabaseClient: getIt()));
+  getIt
+    ..registerFactory<AuthRemoteDataSource>(
+        () => AuthRemoteDataSourceImpl(supabaseClient: getIt()))
+    ..registerFactory<AuthRepository>(
+        () => AuthRepositoryImpl(authRemoteDataSource: getIt()))
+    ..registerFactory(() => UserLogin(authRepository: getIt()))
+    ..registerFactory(() => UserSignUp(authRepository: getIt()))
 
-  getIt.registerFactory<AuthRepository>(
-      () => AuthRepositoryImpl(authRemoteDataSource: getIt()));
-  getIt.registerFactory(() => UserLogin(authRepository: getIt()));
-  getIt.registerFactory(() => UserSignUp(authRepository: getIt()));
-
-  // Bloc
-  getIt.registerLazySingleton(() => AuthBloc(getIt(), getIt()));
+    // Bloc
+    ..registerLazySingleton(() => AuthBloc(getIt(), getIt()));
 }
