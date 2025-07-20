@@ -4,6 +4,7 @@ import 'package:supabase_studying/core/secret/app_key.dart';
 import 'package:supabase_studying/features/auth/data/dataSources/auth_remote_data_source.dart';
 import 'package:supabase_studying/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:supabase_studying/features/auth/domain/repository/auth_repository.dart';
+import 'package:supabase_studying/features/auth/domain/useCases/user_login.dart';
 import 'package:supabase_studying/features/auth/domain/useCases/user_sign_up.dart';
 import 'package:supabase_studying/features/auth/presentation/bloc/auth_bloc.dart';
 
@@ -22,7 +23,9 @@ void _authInit() {
 
   getIt.registerFactory<AuthRepository>(
       () => AuthRepositoryImpl(authRemoteDataSource: getIt()));
+  getIt.registerFactory(() => UserLogin(authRepository: getIt()));
   getIt.registerFactory(() => UserSignUp(authRepository: getIt()));
+
   // Bloc
-  getIt.registerLazySingleton(() => AuthBloc(getIt()));
+  getIt.registerLazySingleton(() => AuthBloc(getIt(), getIt()));
 }
