@@ -19,6 +19,20 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Either<Failure, User>> userSession() async {
+    try {
+      final user = await _authRemoteDataSource.getUserSessionData();
+      if (user == null) {
+        return Left(Failure('Пользователя нет в Базе Данных'));
+      } else {
+        return Right(user);
+      }
+    } on ServerException catch (e) {
+      return Left(Failure(e.title));
+    }
+  }
+
+  @override
   Future<Either<Failure, User>> signUpWithEmailPassword(
       {required String name,
       required String email,
