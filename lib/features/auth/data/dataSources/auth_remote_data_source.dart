@@ -3,6 +3,8 @@ import 'package:supabase_studying/core/error/exeption.dart';
 import 'package:supabase_studying/features/auth/data/model/user_model.dart';
 
 abstract interface class AuthRemoteDataSource {
+  Session? get userSession;
+  Future<UserModel?> getUserSessionData();
   Future<UserModel> signUpWithEmailPassword({
     required String name,
     required String email,
@@ -19,6 +21,26 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   AuthRemoteDataSourceImpl({required SupabaseClient supabaseClient})
       : _supabaseClient = supabaseClient;
+
+  @override
+  Session? get userSession => _supabaseClient.auth.currentSession;
+
+  @override
+  Future<UserModel?> getUserSessionData() async {
+    try {
+      if (userSession != null) {
+        final result = await _supabaseClient
+            .from('profiles')
+            .select()
+            .eq('id', userSession!.user.id);
+        return UserModel.fromJson(result.first);
+      }
+      return null;
+    } catch (e) {
+      throw ServerException('Ошибка с Б/Д');
+    }
+  }
+
   @override
   Future<UserModel> signUpWithEmailPassword(
       {required String name,
